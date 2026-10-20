@@ -190,7 +190,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
       <a class="border-b-[3px] border-transparent py-1 hover:border-amber-500" href="#lokasi">Lokasi</a>
     </nav>
     <div class="ml-auto hidden items-center gap-3 lg:flex">
-      <a href="#reservasi" class="btn btn-white btn-sm">Reservasi Meja</a>
       <a href="#" data-wa="Halo Warkop D'PAN, mau order dong." target="_blank" rel="noopener" class="btn btn-sun btn-sm">Order WA</a>
     </div>
     <button type="button" class="btn btn-white ml-auto !h-11 !w-11 !p-0 lg:!hidden" @click="menu=!menu" :aria-expanded="menu" aria-controls="menu-mobile" aria-label="Buka atau tutup menu">
@@ -206,7 +205,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
       <a class="rounded-xl px-3 py-3 hover:bg-sun" href="#promo">Promo</a>
       <a class="rounded-xl px-3 py-3 hover:bg-sun" href="#lokasi">Lokasi</a>
       <div class="mt-2 grid grid-cols-2 gap-3 pb-1">
-        <a href="#reservasi" class="btn btn-white btn-sm">Reservasi Meja</a>
         <a href="#" data-wa="Halo Warkop D'PAN, mau order dong." target="_blank" rel="noopener" class="btn btn-sun btn-sm">Order WA</a>
       </div>
     </div>
@@ -408,66 +406,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   <div class="gutter mx-auto max-w-6xl">
     <div class="max-w-2xl">
       <h2 class="judul judul-dark">Jadwal Nobar &amp; Event</h2>
-      <p class="lead mt-6">Liga Inggris, Champions, Timnas, sampai mini turnamen e-sports. Booking dulu biar kebagian kursi, teriaknya bareng-bareng.</p>
+      <p class="lead mt-6">Liga Inggris, Champions, Timnas, sampai mini turnamen e-sports. Free seating, tinggal datang dan cari tempat duduk favoritmu, teriaknya bareng-bareng.</p>
     </div>
 
-    <div class="mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-      <div class="grid min-w-0 gap-4 sm:grid-cols-2">
+    <div class="mt-10">
+      <div class="grid min-w-0 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <template x-for="ev in events" :key="ev.id">
           <article class="slate-card flex min-w-0 flex-col p-5">
             <div class="flex items-center justify-between gap-2">
               <span class="rounded-md bg-sun px-2 py-1 font-mono text-[11px] font-bold uppercase tracking-wider text-ink" x-text="ev.tag"></span>
-              <span class="text-xs font-extrabold" :class="status(ev).cls" x-text="status(ev).label"></span>
             </div>
             <h3 class="mt-3 font-kn text-xl leading-snug" x-text="ev.title"></h3>
             <p class="mt-1 text-sm font-bold text-sun" x-text="ev.when"></p>
             <p class="mt-1 flex-1 text-sm text-slate-300" x-text="ev.desc"></p>
-            <div class="mt-4 rounded-2xl border-2 border-white/10 bg-ink px-4 py-3" role="group" :aria-label="'Sisa ' + ev.left + ' ' + ev.unit">
-              <div class="flex items-baseline justify-between gap-2">
-                <span class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Sisa</span>
-                <span class="led text-3xl leading-none"><span x-text="String(ev.left).padStart(2,'0')"></span><span class="ml-2 text-xs uppercase" x-text="ev.unit"></span></span>
-              </div>
-              <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-700"><div class="h-full rounded-full bg-sun" :style="'width:' + Math.round((ev.cap-ev.left)/ev.cap*100) + '%'"></div></div>
-            </div>
-            <button type="button" class="btn btn-sun btn-sm mt-4" @click="pick(ev.id)">Amankan Seat Nobar</button>
+            <p class="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-lime-300"><span class="h-2 w-2 rounded-full bg-lime-300"></span>Free seating</p>
           </article>
         </template>
       </div>
 
-      <form id="reservasi" class="min-w-0 scroll-mt-24 rounded-3xl border-[3px] border-ink bg-cream p-5 text-ink shadow-[7px_8px_0_#FFC629] sm:p-6 lg:sticky lg:top-24" @submit.prevent novalidate>
-        <h3 class="font-hand text-3xl leading-none">Amankan kursimu</h3>
-        <p class="mt-2 text-sm text-[#5F5642]">Isi data singkat, lanjut chat ke WhatsApp warkop.</p>
-        <div class="mt-5 space-y-4">
-          <div>
-            <label for="r-nama" class="text-sm font-bold">Nama</label>
-            <input id="r-nama" x-ref="nama" type="text" class="field mt-1.5" placeholder="Nama kamu" autocomplete="name" x-model="form.nama">
-          </div>
-          <div>
-            <label for="r-event" class="text-sm font-bold">Acara</label>
-            <select id="r-event" class="field mt-1.5" x-model="form.event">
-              <template x-for="ev in events" :key="ev.id"><option :value="ev.id" x-text="ev.title"></option></template>
-              <option value="meja">Reservasi meja biasa</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label for="r-jam" class="text-sm font-bold">Jam datang</label>
-              <input id="r-jam" type="time" class="field mt-1.5" x-model="form.jam">
-            </div>
-            <div>
-              <span class="text-sm font-bold" id="r-orang-l">Jumlah orang</span>
-              <div class="mt-1.5 flex h-[2.95rem] items-center justify-between rounded-[.85rem] border-[2.5px] border-ink bg-white px-2" role="group" aria-labelledby="r-orang-l">
-                <button type="button" class="step-btn !h-8 !w-8" @click="form.orang=Math.max(1,form.orang-1)" aria-label="Kurangi jumlah orang"><svg class="ic h-4 w-4"><use href="#s-minus"/></svg></button>
-                <span class="font-mono text-base font-bold" x-text="form.orang" aria-live="polite"></span>
-                <button type="button" class="step-btn !h-8 !w-8" @click="form.orang=Math.min(30,form.orang+1)" aria-label="Tambah jumlah orang"><svg class="ic h-4 w-4"><use href="#s-plus"/></svg></button>
-              </div>
-            </div>
-          </div>
-          <p class="text-sm font-bold text-red-700" role="alert" x-show="err" x-text="err" x-cloak></p>
-          <a :href="waHref" target="_blank" rel="noopener" class="btn btn-sun w-full" @click="go($event)">Amankan Seat Nobar</a>
-          <p class="text-xs text-[#5F5642]">Booking baru sah setelah dikonfirmasi lewat WhatsApp.</p>
-        </div>
-      </form>
     </div>
   </div>
 </section>
@@ -828,42 +784,15 @@ document.addEventListener('alpine:init', () => {
     }
   }));
 
-  /* ---------- Nobar & reservasi ---------- */
+  /* ---------- Nobar (jadwal saja, free seating) ---------- */
   Alpine.data('nobar', () => ({
-    /* CONTOH JADWAL: ganti judul, jam, dan sisa kursi sesuai kondisi warkop. */
+    /* CONTOH JADWAL: ganti judul dan jam sesuai jadwal warkop. */
     events: [
       { id: 'epl', tag: 'Liga Inggris', title: 'Match Day Premier League', when: 'Sabtu & Minggu malam', desc: 'Layar proyektor besar, suara full, rame sampai peluit akhir.', left: 5, cap: 20, unit: 'Meja' },
       { id: 'ucl', tag: 'Champions', title: 'Champions League Night', when: 'Selasa & Rabu dini hari', desc: 'Warkop buka 24 jam, jadi kick-off dini hari tetap aman.', left: 8, cap: 20, unit: 'Meja' },
       { id: 'timnas', tag: 'Timnas', title: 'Nobar Timnas Garuda', when: 'Setiap Timnas main', desc: 'Pakai jersey, bawa suara. Teriak bareng sampai serak.', left: 12, cap: 30, unit: 'Kursi' },
-      { id: 'esports', tag: 'E-Sports', title: 'Mini Tournament E-Sports', when: 'Jumat malam', desc: 'Mabar skala kecil, daftar per tim. Hadiah nongkrong gratis.', left: 3, cap: 8, unit: 'Slot Tim' }
-    ],
-    form: { nama: '', event: 'epl', jam: '', orang: 4 }, err: '',
-    init(){ this.$nextTick(() => { const v = this.form.event; this.form.event = ''; this.$nextTick(() => { this.form.event = v; }); }); },
-    status(ev){
-      if(ev.left <= 3) return { label: 'Hampir penuh', cls: 'text-red-300' };
-      if(ev.left <= 6) return { label: 'Cepat habis', cls: 'text-sun' };
-      return { label: 'Masih lega', cls: 'text-lime-300' };
-    },
-    pick(id){
-      this.form.event = id;
-      document.getElementById('reservasi').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      setTimeout(() => this.$refs.nama && this.$refs.nama.focus({ preventScroll: true }), reduceMotion ? 0 : 500);
-    },
-    get evObj(){ return this.events.find(e => e.id === this.form.event); },
-    get waHref(){
-      const L = ["Halo Warkop D'PAN, mau booking."];
-      L.push('Nama: ' + (this.form.nama.trim() || '-'));
-      L.push('Acara: ' + (this.evObj ? this.evObj.title + ' (' + this.evObj.when + ')' : 'Reservasi meja biasa'));
-      L.push('Jumlah orang: ' + this.form.orang);
-      if(this.form.jam) L.push('Jam datang: ' + this.form.jam);
-      return waUrl(L.join('\n'));
-    },
-    go(e){
-      if(!this.form.nama.trim()){
-        e.preventDefault(); this.err = 'Isi nama dulu ya, biar gampang dicatat.';
-        this.$refs.nama.focus();
-      } else { this.err = ''; }
-    }
+      { id: 'esports', tag: 'E-Sports', title: 'Mini Tournament E-Sports', when: 'Jumat malam', desc: 'Mabar skala kecil, bawa timmu. Hadiah nongkrong gratis.', left: 3, cap: 8, unit: 'Slot Tim' }
+    ]
   }));
 
   /* ---------- Lokasi ---------- */
