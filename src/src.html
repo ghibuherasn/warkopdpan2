@@ -63,17 +63,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .hero:not(.x){}
 @media (max-width:820px){.hero{aspect-ratio:auto;min-height:0}.hero-body{padding-top:clamp(9rem,48vw,15rem)}}
 .tt-sec{background:var(--slate);color:#fff;border-top:3px solid var(--ink);background-image:radial-gradient(rgba(255,198,41,.12) 1.4px,transparent 1.4px);background-size:22px 22px}
-.tt-phone{flex:0 0 68%;scroll-snap-align:center;max-width:260px;aspect-ratio:9/16;border:3px solid var(--ink);border-radius:26px;overflow:hidden;background:var(--ink);box-shadow:6px 6px 0 var(--sun)}
-@media(min-width:640px){.tt-phone{flex:none;width:100%}}
-.tt-phone iframe{width:100%;height:100%;border:0;display:block}
-.tt-profile{width:100%;max-width:780px;border:3px solid var(--ink);border-radius:26px;overflow:hidden;background:#fff;box-shadow:6px 6px 0 var(--sun);padding:.25rem}
+.tt-profile{width:100%;max-width:780px;display:flex;justify-content:center}
 .tt-profile .tiktok-embed{margin:0 auto!important}
-.tt-profile{max-width:420px!important;background:var(--ink)!important;padding:0!important}
-.tt-profile section a.tt-fb{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:.2rem;aspect-ratio:9/16;padding:1.2rem;color:#fff;background:linear-gradient(0deg,rgba(15,23,42,.92),rgba(15,23,42,.1) 60%),url(__POSTER__) 50% center/auto 100%}
-.tt-fb small{font-weight:600;opacity:.85}
-.tt-play{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:999px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);position:absolute;top:42%;left:50%;transform:translate(-50%,-50%)}
-.tt-cap{font-family:var(--f-hand);font-size:1.4rem}
-.tt-profile section a{display:block;padding:2rem 1rem;text-align:center;font-weight:800;color:var(--ink)}
+.tt-profile section a{color:#fff;font-weight:800}
 .hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(15,23,42,.92) 0%,rgba(15,23,42,.72) 38%,rgba(15,23,42,.12) 68%,transparent 100%)}
 .hero h1{color:#fff;text-shadow:0 3px 0 var(--ink),0 0 22px rgba(0,0,0,.55)}
@@ -526,33 +518,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 
 <!-- ============ FOOTER ============ -->
 <!-- ============ KESERUAN / TIKTOK ============ -->
-<section id="keseruan" class="tt-sec scroll-mt-20 py-16 sm:py-24" x-data="keseruan()">
+<section id="keseruan" class="tt-sec scroll-mt-20 py-16 sm:py-24">
   <div class="gutter mx-auto max-w-6xl">
     <div class="text-center">
       <span class="judul">Keseruan di Warkop D'Pan</span>
       <p class="mx-auto mt-5 max-w-xl text-base font-medium text-slate-200 sm:text-lg">Intip suasana, racikan menu, dan serunya nongkrong bareng kami langsung dari TikTok.</p>
     </div>
 
-    <!-- Video vertikal 9:16 (embed resmi TikTok) -->
-    <div x-show="vids.length" class="tt-row mx-auto mt-10 flex max-w-4xl snap-x snap-mandatory gap-5 overflow-x-auto pb-4 sm:grid sm:grid-cols-3 sm:justify-items-center sm:overflow-visible">
-      <template x-for="id in vids" :key="id">
-        <div class="tt-phone">
-          <iframe :src="'https://www.tiktok.com/player/v1/' + id + '?loop=1&rel=0&description=0'" loading="lazy" allow="fullscreen; encrypted-media" allowfullscreen title="Video TikTok Warkop D'Pan"></iframe>
-        </div>
-      </template>
-    </div>
-
-    <!-- Tanpa ID video: embed profil resmi TikTok (menampilkan video terbaru akun) -->
-    <div x-show="!vids.length" class="mx-auto mt-10 flex justify-center">
-      <div class="tt-profile" x-ref="profile">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@warkop.dpan" data-unique-id="warkop.dpan" data-embed-type="creator" style="max-width:780px;min-width:288px;">
-          <section><a class="tt-fb" target="_blank" rel="noopener" href="https://www.tiktok.com/@warkop.dpan?refer=creator_embed"><span class="tt-play"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="tt-cap">Tonton di TikTok</span><small>@warkop.dpan</small></a></section>
+    <div class="mx-auto mt-10 flex justify-center">
+      <div class="tt-profile">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@warkop.dpan" data-unique-id="warkop.dpan" data-embed-type="creator" style="max-width: 780px; min-width: 288px;">
+          <section>
+            <a target="_blank" href="https://www.tiktok.com/@warkop.dpan?refer=creator_embed">@warkop.dpan</a>
+          </section>
         </blockquote>
+        <script async src="https://www.tiktok.com/embed.js"></script>
       </div>
     </div>
 
     <div class="mt-10 text-center">
-      <a :href="url" target="_blank" rel="noopener" class="btn btn-sun">Lihat TikTok Kami</a>
+      <a href="https://www.tiktok.com/@warkop.dpan" target="_blank" rel="noopener" class="btn btn-sun">Lihat TikTok Kami</a>
       <p class="mt-3 text-sm font-semibold text-slate-300">@warkop.dpan</p>
     </div>
   </div>
@@ -663,10 +648,7 @@ const CONFIG = {
   mapsUrl: "",
   alamat: "Bekasi, Jawa Barat",
   instagram: "https://www.instagram.com/warkopdpan/",
-  tiktok: "https://www.tiktok.com/@warkop.dpan",
-  /* Opsional: ID video TikTok (angka di akhir link: tiktok.com/@warkop.dpan/video/<ID>), maks 3.
-     Diisi = tampil 3 video vertikal 9:16 yang bisa diputar. Kosong = embed profil resmi TikTok. */
-  tiktokVideos: []
+  tiktok: "https://www.tiktok.com/@warkop.dpan"
 };
 
 const fmt = n => 'Rp ' + Number(n).toLocaleString('id-ID');
@@ -692,16 +674,6 @@ function makeCode(){
 
 document.addEventListener('alpine:init', () => {
 
-  Alpine.data('keseruan', () => ({
-    url: CONFIG.tiktok,
-    vids: (CONFIG.tiktokVideos || []).filter(Boolean).slice(0, 3),
-    init(){
-      if(this.vids.length) return;
-      const sc = document.createElement('script');
-      sc.src = 'https://www.tiktok.com/embed.js'; sc.async = true;
-      document.body.appendChild(sc);
-    }
-  }));
 
 
   /* ---------- Voucher (D'PAN Pass) ---------- */
